@@ -42,9 +42,9 @@ const CONFIG = {
   horarios: {
     general:      "09:00 a 18:00",   // jornada completa (hero, resumen)
     charlas:      "09:00 a 12:00",
-    ctf:          "12:30 a 18:00",
+    ctf:          "13:00 a 18:00",
     charlasInicio:"09:00",
-    ctfInicio:    "12:30"
+    ctfInicio:    "13:00"
   },
 
   /* ── 4. LUGARES  📍  (cada actividad en su recinto) ──────────────────── */
@@ -84,19 +84,25 @@ const CONFIG = {
   /* ── 6. CHARLAS Y EXPOSITORES ────────────────────────────────────────── */
   // foto: URL de la imagen. Deja "" para el marcador "Por confirmar".
   charlas: [
-    { hora: "09:00", titulo: "Charla 1 — Por confirmar", expositor: "Por confirmar", cargo: "Especialista SEK", foto: "", resumen: "Tema en definición junto al equipo de SEK." },
-    { hora: "10:00", titulo: "Charla 2 — Por confirmar", expositor: "Por confirmar", cargo: "Especialista SEK", foto: "", resumen: "Tema en definición junto al equipo de SEK." },
-    { hora: "11:00", titulo: "Charla 3 — Por confirmar", expositor: "Por confirmar", cargo: "Especialista SEK", foto: "", resumen: "Tema en definición junto al equipo de SEK." }
+    { hora: "09:45", titulo: "Charla 1 — Por confirmar", expositor: "Por confirmar", cargo: "Especialista SEK", foto: "", resumen: "Tema en definición junto al equipo de SEK." },
+    { hora: "10:30", titulo: "Charla 2 — Por confirmar", expositor: "Por confirmar", cargo: "Especialista SEK", foto: "", resumen: "Tema en definición junto al equipo de SEK." },
+    { hora: "11:15", titulo: "Charla 3 — Por confirmar", expositor: "Por confirmar", cargo: "Especialista SEK", foto: "", resumen: "Tema en definición junto al equipo de SEK." }
   ],
 
   /* ── 7. PROGRAMA / CRONOGRAMA ────────────────────────────────────────── */
-  // Arreglo vacío [] = muestra el mensaje "en preparación".
-  // { hora, titulo, detalle, tipo: "charla" | "ctf" | "hito" }
+  // Aquí van SOLO los hitos que no son charlas.
+  // Las 3 charlas se toman automáticamente de la sección 6 (hora, título y
+  // expositor) y se intercalan solas: edítalas allá y el cronograma se actualiza.
+  // Arreglo vacío [] y sin charlas = muestra el mensaje "en preparación".
+  // { hora, titulo, detalle, tipo: "ctf" | "hito" }
   programa: [
-    // { hora: "08:30", titulo: "Acreditación", detalle: "Foyer del Teatro", tipo: "hito" },
-    // { hora: "09:00", titulo: "Charla 1", detalle: "Teatro DuocUC", tipo: "charla" },
-    // { hora: "12:30", titulo: "Inicio del CTF", detalle: "CITT, 6° piso", tipo: "ctf" },
-    // { hora: "18:00", titulo: "Cierre y premiación", detalle: "", tipo: "hito" }
+    { hora: "09:00", titulo: "Acreditación",                        detalle: "Foyer del Teatro DuocUC. Ten a mano tu código QR o correo de confirmación.", tipo: "hito" },
+    { hora: "09:30", titulo: "Bienvenida y saludos de autoridades", detalle: "Teatro DuocUC",                        tipo: "hito" },
+    { hora: "12:00", titulo: "Cierre de la mañana",                 detalle: "Teatro DuocUC",                        tipo: "hito" },
+    { hora: "12:15", titulo: "Descanso y traslado al CITT",         detalle: "Del Teatro al CITT, 6° piso del edificio CTI", tipo: "hito" },
+    { hora: "13:00", titulo: "Instrucciones y reglas del CTF",      detalle: "CITT, 6° piso · 15 minutos",           tipo: "ctf" },
+    { hora: "13:15", titulo: "Inicio de la competencia",            detalle: "CITT, 6° piso",                        tipo: "ctf" },
+    { hora: "18:00", titulo: "Cierre de los retos y premiación",     detalle: "Se congela el marcador y parte de inmediato la premiación. CITT, 6° piso", tipo: "hito" }
   ],
 
   /* ── 8. GALERÍA HACKINGTA 2025 (carrusel) ────────────────────────────── */
@@ -729,12 +735,21 @@ footer{padding:56px 0 70px;border-top:1px solid var(--linea);margin-top:20px}
 
   /* ---- Programa ---- */
   const prog=$("#prog");
-  if(!C.programa||!C.programa.length){
+  /* Las charlas se leen de CONFIG.charlas para que el cronograma y la sección
+     de expositores no puedan quedar descuadrados: un solo lugar que editar. */
+  const filasCharlas=(C.charlas||[]).filter(ch=>ch.hora).map((ch,i)=>{
+    const exp=/por confirmar/i.test(ch.expositor||"")?"":ch.expositor;
+    return {hora:ch.hora, titulo:ch.titulo||`Charla ${i+1}`,
+            detalle:[L.charlas,exp].filter(Boolean).join(" · "), tipo:"charla"};
+  });
+  const filasProg=[...(C.programa||[]),...filasCharlas]
+    .sort((a,b)=>String(a.hora).localeCompare(String(b.hora)));
+  if(!filasProg.length){
     prog.innerHTML=`<div class="prog-empty">
       <div class="t">Cronograma en preparación</div>
       <p>Publicaremos el detalle hora por hora antes del evento. Mientras tanto: charlas de ${esc(H.charlas)} en ${esc(L.charlas)} y competencia de ${esc(H.ctf)} en ${esc(L.ctf)}.</p></div>`;
   }else{
-    prog.innerHTML=C.programa.map(p=>`<div class="prog-row" data-tipo="${esc(p.tipo||"hito")}">
+    prog.innerHTML=filasProg.map(p=>`<div class="prog-row" data-tipo="${esc(p.tipo||"hito")}">
       <div class="h">${esc(p.hora)}</div>
       <div><div class="t">${esc(p.titulo)}</div>${p.detalle?`<div class="d">${esc(p.detalle)}</div>`:""}</div></div>`).join("");
   }
