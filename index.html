@@ -15,10 +15,10 @@ const CONFIG = {
 
   /* ── 1. ENLACES A FORMULARIOS EXTERNOS ───────────────────────────────── */
   urls: {
-    registroCTF:     "https://forms.gle/REEMPLAZAR-CTF",      // Inscripción equipos CTF (incluye charlas)
+    registroCTF:     "https://forms.cloud.microsoft/r/qpTkQk8YYS",      // Inscripción equipos CTF (incluye charlas)
     registroCharlas: "https://forms.gle/REEMPLAZAR-CHARLAS",  // Inscripción solo charlas
-    bases:           "",                                       // Bases y reglamento. Vacío = oculta el botón
-    contactoMail:    "martin.munoz@profesor.duoc.cl",
+    bases:           "https://canva.link/zwmnvg7uj2b6sj5",                                       // Bases y reglamento. Vacío = oculta el botón
+    contactoMail:    "martin.munoz@profesor.duoc.cl ó fel.caceres@duocuc.cl ",
     duoc:            "https://www.duoc.cl/",
     sek:             "https://sek.io/es"
   },
@@ -249,9 +249,14 @@ header.nav{position:fixed;top:14px;left:0;right:0;z-index:60;display:flex;justif
 @media (max-width:760px){.j-grid{grid-template-columns:1fr}.j-cell + .j-cell{border-left:0;border-top:1px solid var(--linea)}.j-top .sede{margin-left:0;width:100%}}
 
 /* ═══════════════ CONTEXTO ═══════════════ */
-.ctx{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(28px,5vw,64px);align-items:start}
-@media (max-width:900px){.ctx{grid-template-columns:1fr}}
-.ctx-notes{display:grid;gap:14px}
+.ctx-texto{display:grid;grid-template-columns:1fr 1fr;gap:4px clamp(28px,5vw,64px);
+  margin-bottom:clamp(30px,4vw,46px)}
+.ctx-texto .lede{max-width:60ch}
+.ctx-texto strong{color:var(--texto);font-weight:600}
+@media (max-width:1040px){.ctx-texto{grid-template-columns:1fr}.ctx-texto .lede{max-width:66ch}}
+.ctx-notes{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media (max-width:1280px){.ctx-notes{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.ctx-notes{grid-template-columns:1fr}}
 .note{border-radius:var(--r-md);padding:20px 22px}
 .note .t{font-family:var(--display);font-size:21px;color:var(--verde-hi);margin-bottom:4px}
 .note p{margin:0;font-size:15.5px;color:var(--texto-2)}
@@ -339,8 +344,11 @@ header.nav{position:fixed;top:14px;left:0;right:0;z-index:60;display:flex;justif
 .gal-btn:hover{background:linear-gradient(160deg,rgba(255,255,255,.22),rgba(255,255,255,.09))}
 .gal-btn:active{transform:scale(.93)}
 .gal-btn[disabled]{opacity:.35;cursor:default}
-.gal-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:6px}
+.gal-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:6px;cursor:grab}
 .gal-track::-webkit-scrollbar{display:none}
+.gal-track.dragging{cursor:grabbing;user-select:none;-webkit-user-select:none}
+.gal-track.dragging .ph-img{pointer-events:none}
+@media (hover:none){.gal-track{cursor:auto}}
 .slide{flex:0 0 min(72%,620px);scroll-snap-align:start;border-radius:var(--r-lg);overflow:hidden}
 @media (max-width:700px){.slide{flex:0 0 88%}}
 .slide .ph-img{position:relative;aspect-ratio:16/10;background:linear-gradient(150deg,rgba(47,211,107,.14),rgba(255,255,255,.03));display:grid;place-items:center}
@@ -463,28 +471,33 @@ footer{padding:56px 0 70px;border-top:1px solid var(--linea);margin-top:20px}
   <div class="wrap">
     <div class="sec-head"><span class="n">01</span><h2>Qué es Hackingta</h2></div>
     <hr class="rule">
-    <div class="ctx">
+    <div class="ctx-texto">
       <div>
-        <p class="lede">Hackingta es un CTF organizado por DuocUC Viña del Mar junto a SEK para dar el puntapié inicial al mes de la ciberseguridad con un evento de primer nivel.</p>
-        <p class="lede">Los participantes ponen a prueba sus habilidades en un ambiente colaborativo y desafiante, resolviendo retos reales contra el reloj. Las charlas de la mañana traen la visión de lo que se está desarrollando hoy en la industria: un acercamiento en primera persona a las tendencias actuales de ciberseguridad, contado por quienes trabajan en ellas.</p>
+        <p class="lede"><strong>Hackingta</strong> es un evento de ciberseguridad organizado por <strong>Duoc UC Sede Viña del Mar junto a SEK</strong>, que busca acercar la ciberseguridad a la comunidad a través del aprendizaje, la colaboración y la práctica.</p>
+        <p class="lede">La jornada combina <strong>charlas realizadas por profesionales del área</strong> con una <strong>competencia CTF (Capture The Flag)</strong>, donde los participantes pueden poner a prueba sus conocimientos y habilidades resolviendo desafíos relacionados con distintas áreas de la seguridad informática.</p>
       </div>
-      <div class="ctx-notes">
-        <div class="note glass">
-          <div class="t">Presencial, con transmisión en vivo</div>
-          <p id="notaModalidad">—</p>
-        </div>
-        <div class="note glass">
-          <div class="t">Abierto a la comunidad</div>
-          <p>Estudiantes, docentes, profesionales y entusiastas. No necesitas ser de DuocUC para competir.</p>
-        </div>
-        <div class="note glass">
-          <div class="t">Dos recintos, un mismo día</div>
-          <p id="notaRecintos">Charlas en el Teatro y competencia en el CITT, ambos en la sede Viña del Mar.</p>
-        </div>
-        <div class="note glass">
-          <div class="t">Mes de la ciberseguridad</div>
-          <p>Actividad de apertura de octubre, con contenidos y retos preparados junto al equipo técnico de SEK.</p>
-        </div>
+      <div>
+        <p class="lede">Más que una competencia, Hackingta busca generar un espacio para <strong>compartir conocimiento, crear conciencia sobre los riesgos digitales, aprender de otros y fomentar el trabajo en equipo</strong>, permitiendo que estudiantes y miembros de la comunidad puedan acercarse de una forma práctica y entretenida al mundo de la ciberseguridad.</p>
+        <p class="lede">La actividad está abierta a la comunidad y busca reunir tanto a personas que están comenzando como a quienes ya tienen experiencia y quieren desafiar sus habilidades.</p>
+      </div>
+    </div>
+
+    <div class="ctx-notes">
+      <div class="note glass">
+        <div class="t">Presencial, con transmisión en vivo</div>
+        <p id="notaModalidad">—</p>
+      </div>
+      <div class="note glass">
+        <div class="t">Abierto a la comunidad</div>
+        <p>Estudiantes, docentes, profesionales y entusiastas. No necesitas ser de DuocUC para competir.</p>
+      </div>
+      <div class="note glass">
+        <div class="t">Dos recintos, un mismo día</div>
+        <p id="notaRecintos">Charlas en el Teatro y competencia en el CITT, ambos en la sede Viña del Mar.</p>
+      </div>
+      <div class="note glass">
+        <div class="t">Mes de la ciberseguridad</div>
+        <p>Actividad de apertura de octubre, con contenidos y retos preparados junto al equipo técnico de SEK.</p>
       </div>
     </div>
   </div>
@@ -757,7 +770,7 @@ footer{padding:56px 0 70px;border-top:1px solid var(--linea);margin-top:20px}
   const imgPh=`<svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="#7CF0B4" stroke-width="1.3" stroke-linejoin="round"><rect x="3.2" y="5" width="17.6" height="14" rx="2.4"/><circle cx="8.6" cy="10" r="1.5"/><path d="m4 17 4.8-4.4 3.4 3 2.7-2.2L20.8 18"/></svg>`;
   const fotos=C.galeria2025||[];
   track.innerHTML=fotos.map(f=>`<figure class="slide glass" style="margin:0">
-      <div class="ph-img">${f.src?`<img src="${esc(f.src)}" alt="${esc(f.alt||"")}" loading="lazy">`
+      <div class="ph-img">${f.src?`<img src="${esc(f.src)}" alt="${esc(f.alt||"")}" loading="lazy" draggable="false">`
                               :`<div class="ph">${imgPh}<span>Foto por agregar</span></div>`}</div>
       ${f.caption?`<figcaption class="cap">${esc(f.caption)}</figcaption>`:""}
     </figure>`).join("");
@@ -778,6 +791,37 @@ footer{padding:56px 0 70px;border-top:1px solid var(--linea);margin-top:20px}
   track.addEventListener("keydown",e=>{
     if(e.key==="ArrowRight"){e.preventDefault();goTo(current()+1);}
     if(e.key==="ArrowLeft"){e.preventDefault();goTo(current()-1);}});
+  /* Arrastre con el mouse, además de los botones, los puntos y el teclado.
+     En táctil no se interviene: el desplazamiento nativo ya funciona y es mejor. */
+  const snapOn=()=>{clearTimeout(track._s); track._s=setTimeout(()=>{track.style.scrollSnapType="";},420);};
+  let drag=null;
+  track.addEventListener("pointerdown",e=>{
+    if(e.pointerType==="touch"||e.button!==0) return;
+    drag={x:e.clientX,left:track.scrollLeft,movido:false};
+  });
+  /* move y up van en window: así el arrastre sigue aunque el cursor salga del carrusel */
+  addEventListener("pointermove",e=>{
+    if(!drag) return;
+    const dx=e.clientX-drag.x;
+    if(!drag.movido){
+      if(Math.abs(dx)<4) return;            // tolerancia: un clic no debe contar como arrastre
+      drag.movido=true;
+      clearTimeout(track._s);
+      track.style.scrollSnapType="none";    // el anclaje pelea con el arrastre; se restaura al soltar
+      track.classList.add("dragging");
+    }
+    e.preventDefault();
+    track.scrollLeft=drag.left-dx;
+  });
+  const finDrag=()=>{
+    if(!drag) return;
+    const movido=drag.movido; drag=null;
+    track.classList.remove("dragging");
+    if(movido){ goTo(current()); snapOn(); } // queda centrado en la foto más cercana
+  };
+  addEventListener("pointerup",finDrag);
+  addEventListener("pointercancel",finDrag);
+
   addEventListener("resize",sync); sync();
 
   /* ---- Lente especular ---- */
