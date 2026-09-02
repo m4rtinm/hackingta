@@ -198,11 +198,13 @@ header.nav{position:fixed;top:14px;left:0;right:0;z-index:60;display:flex;justif
 .navorgs a{display:flex;align-items:center;opacity:.72;transition:opacity .2s}
 .navorgs a:hover{opacity:1}
 .navorgs img{display:block;width:auto;max-width:none}
-.navorgs .duoc img{height:22px}
-.navorgs .sek img{height:16px}
+.navorgs .duoc img{height:40px}
+.navorgs .sek img{height:26px}
 .navorgs::before{content:"";width:1px;height:24px;background:var(--linea)}
 @media (max-width:1040px){.navlinks a{padding:8px 10px;font-size:14px}}
-@media (max-width:920px){.navlinks{display:none}.navorgs{margin-left:auto}}
+/* Donde los enlaces y las marcas no caben juntos, mandan los enlaces */
+@media (max-width:1160px){.navorgs{display:none}}
+@media (max-width:920px){.navlinks{display:none}.navorgs{display:flex;margin-left:auto}}
 @media (max-width:600px){.navorgs{display:none}.navbrand{margin-right:auto}}
 
 /* ═══════════════ BOTONES ═══════════════ */
@@ -414,7 +416,7 @@ footer{padding:56px 0 70px;border-top:1px solid var(--linea);margin-top:20px}
       <a href="#edicion-2025">2025</a>
     </div>
     <div class="navorgs">
-      <a class="duoc" id="navDuoc" href="#" target="_blank" rel="noopener"><img src="static/logos/duoc-vina.png" alt="DuocUC Sede Viña del Mar" width="877" height="214"></a>
+      <a class="duoc" id="navDuoc" href="#" target="_blank" rel="noopener"><img src="static/logos/duoc-einfo-apilado.png" alt="Escuela de Informática y Telecomunicaciones DuocUC" width="584" height="214"></a>
       <a class="sek" id="navSek" href="#" target="_blank" rel="noopener"><img src="static/logos/sek.png" alt="SEK — Security Ecosystem Knowledge" width="329" height="65"></a>
     </div>
     <a class="btn btn-primary btn-sm" href="#inscripcion">Inscribirme</a>
