@@ -205,9 +205,22 @@ header.nav{position:fixed;top:14px;left:0;right:0;z-index:60;display:flex;justif
 .navorgs a:hover{opacity:1}
 .navorgs img{display:block;width:auto;max-width:none}
 .navorgs .duoc img{height:40px}
-.navorgs .sek img{height:26px}
+.navorgs .sek img{height:21px}
 .navorgs::before{content:"";width:1px;height:24px;background:var(--linea)}
 @media (max-width:1040px){.navlinks a{padding:8px 10px;font-size:14px}}
+/* En pantallas anchas la barra, toda en px fijos, se ve pequeña frente al
+   contenido (que crece hasta 1500px): sube un paso a partir de 1500px. */
+@media (min-width:1500px){
+  header.nav{top:18px}
+  .navbar{gap:14px;padding:12px 12px 12px 22px}
+  .navbrand img{height:56px}
+  .navlinks a{font-size:16.5px;padding:9px 15px}
+  .navorgs{gap:20px}
+  .navorgs .duoc img{height:48px}
+  .navorgs .sek img{height:25px}
+  .navorgs::before{height:30px}
+  .navbar .btn-sm{font-size:16.5px;padding:13px 24px}
+}
 /* Donde los enlaces y las marcas no caben juntos, mandan los enlaces */
 @media (max-width:1160px){.navorgs{display:none}}
 @media (max-width:920px){.navlinks{display:none}.navorgs{display:flex;margin-left:auto}}
@@ -284,7 +297,7 @@ header.nav{position:fixed;top:14px;left:0;right:0;z-index:60;display:flex;justif
 .track li{position:relative;padding-left:24px;font-size:15.5px;color:var(--texto-2)}
 .track li::before{content:"";position:absolute;left:2px;top:9px;width:8px;height:8px;border-radius:3px;background:var(--verde);opacity:.85}
 .track .foot{margin-top:auto;display:grid;gap:10px}
-.aviso{margin-top:20px;border-radius:var(--r-md);padding:18px 22px;border:1px solid rgba(47,211,107,.3);
+.aviso{margin:0 0 22px;border-radius:var(--r-md);padding:18px 22px;border:1px solid rgba(47,211,107,.3);
   background:linear-gradient(120deg,rgba(47,211,107,.12),rgba(47,211,107,.03));display:flex;gap:14px;align-items:flex-start}
 .aviso svg{flex:none;margin-top:2px}
 .aviso p{margin:0;font-size:15.5px}
@@ -382,7 +395,7 @@ footer{padding:56px 0 70px;border-top:1px solid var(--linea);margin-top:20px}
 .orgs .marks img{display:block;width:auto;max-width:none}
 .orgs .marks .duoc img{height:38px}
 .orgs .marks .escuela img{height:46px}
-.orgs .marks .sek img{height:28px}
+.orgs .marks .sek img{height:22px}
 /* Las dos marcas DuocUC van juntas; una línea las separa de SEK */
 .orgs .marks .sep{width:1px;align-self:stretch;min-height:34px;background:var(--linea)}
 @media (max-width:520px){
@@ -423,7 +436,7 @@ footer{padding:56px 0 70px;border-top:1px solid var(--linea);margin-top:20px}
     </div>
     <div class="navorgs">
       <a class="duoc" id="navDuoc" href="#" target="_blank" rel="noopener"><img src="static/logos/duoc-einfo-apilado.png" alt="Escuela de Informática y Telecomunicaciones DuocUC" width="584" height="214"></a>
-      <a class="sek" id="navSek" href="#" target="_blank" rel="noopener"><img src="static/logos/sek.png" alt="SEK — Security Ecosystem Knowledge" width="329" height="65"></a>
+      <a class="sek" id="navSek" href="#" target="_blank" rel="noopener"><img src="static/logos/sek-oficial.png" alt="SEK — Security Ecosystem Knowledge" width="900" height="175"></a>
     </div>
     <a class="btn btn-primary btn-sm" href="#inscripcion">Inscribirme</a>
   </nav>
@@ -516,6 +529,11 @@ footer{padding:56px 0 70px;border-top:1px solid var(--linea);margin-top:20px}
   <div class="wrap">
     <div class="sec-head"><span class="n">02</span><h2>Inscripción</h2></div>
     <hr class="rule">
+    <div class="aviso">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7CF0B4" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.2"/></svg>
+      <p><strong>Si te inscribes al CTF, no completes el registro de charlas.</strong> La inscripción al CTF ya incluye el acceso a las charlas de la mañana: es un mismo evento. El registro de charlas existe solo para quienes asistirán exclusivamente a esa parte.</p>
+    </div>
+
     <div class="tracks">
       <article class="track glass lead" id="ctf">
         <span class="tag">Competencia CTF · solo presencial</span>
@@ -549,10 +567,6 @@ footer{padding:56px 0 70px;border-top:1px solid var(--linea);margin-top:20px}
       </article>
     </div>
 
-    <div class="aviso">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7CF0B4" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.2"/></svg>
-      <p><strong>Si te inscribes al CTF, no completes el registro de charlas.</strong> La inscripción al CTF ya incluye el acceso a las charlas de la mañana: es un mismo evento. El registro de charlas existe solo para quienes asistirán exclusivamente a esa parte.</p>
-    </div>
   </div>
 </section>
 
@@ -650,7 +664,7 @@ footer{padding:56px 0 70px;border-top:1px solid var(--linea);margin-top:20px}
         <a class="duoc" id="markDuoc" href="#" target="_blank" rel="noopener"><img src="static/logos/duoc-vina.png" alt="DuocUC Sede Viña del Mar" width="877" height="214"></a>
         <span class="escuela"><img src="static/logos/duoc-einfo-blanco.png" alt="Escuela de Informática y Telecomunicaciones DuocUC" width="982" height="214"></span>
         <span class="sep" aria-hidden="true"></span>
-        <a class="sek" id="markSek" href="#" target="_blank" rel="noopener"><img src="static/logos/sek.png" alt="SEK — Security Ecosystem Knowledge" width="329" height="65"></a>
+        <a class="sek" id="markSek" href="#" target="_blank" rel="noopener"><img src="static/logos/sek-oficial.png" alt="SEK — Security Ecosystem Knowledge" width="900" height="175"></a>
       </div>
     </div>
     <div class="legal">
