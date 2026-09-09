@@ -82,9 +82,12 @@ const CONFIG = {
   heroImagen: "",   // "" = fondo generado por CSS
 
   /* ── 6. CHARLAS Y EXPOSITORES ────────────────────────────────────────── */
-  // foto: URL de la imagen. Deja "" para el marcador "Por confirmar".
+  // foto:   URL de la imagen. Deja "" para el marcador "Por confirmar".
+  //          Proporción 4:5 (vertical); así entra completa, sin recortes.
+  // titulo: deja "" mientras no haya tema. La tarjeta lo oculta y el
+  //          cronograma muestra "Charla · <expositor>".
   charlas: [
-    { hora: "09:45", titulo: "Charla 1 — Por confirmar", expositor: "Por confirmar", cargo: "Especialista SEK", foto: "", resumen: "Tema en definición junto al equipo de SEK." },
+    { hora: "09:45", titulo: "", expositor: "Pablo Videla", cargo: "Cybersecurity Mentor Team Lead y Consultor Senior en SEK", foto: "static/fotos/pablo-videla.jpg", resumen: "Lidera la Academia Hacker de SEK, donde forma y guía a nuevos talentos en hacking ético. Suma más de 10 años en ciberseguridad, con certificaciones OSCP, HTB CBBH, OPST y OPSA, y trayectoria en pentesting y seguridad ofensiva. Aporta además cuatro años en desarrollo de software y fue profesor invitado en el magíster de Ciberseguridad de la Universidad Mayor (2017)." },
     { hora: "10:30", titulo: "Charla 2 — Por confirmar", expositor: "Por confirmar", cargo: "Especialista SEK", foto: "", resumen: "Tema en definición junto al equipo de SEK." },
     { hora: "11:15", titulo: "Charla 3 — Por confirmar", expositor: "Por confirmar", cargo: "Especialista SEK", foto: "", resumen: "Tema en definición junto al equipo de SEK." }
   ],
@@ -308,16 +311,16 @@ header.nav{position:fixed;top:14px;left:0;right:0;z-index:60;display:flex;justif
 @media (max-width:900px){.speakers{grid-template-columns:1fr 1fr}}
 @media (max-width:620px){.speakers{grid-template-columns:1fr}}
 .speaker{border-radius:var(--r-lg);overflow:hidden;display:flex;flex-direction:column}
-.portrait{position:relative;aspect-ratio:4/3.4;background:linear-gradient(150deg,rgba(47,211,107,.16),rgba(255,255,255,.03));display:grid;place-items:center;border-bottom:1px solid var(--linea)}
+.portrait{position:relative;aspect-ratio:4/5;background:linear-gradient(150deg,rgba(47,211,107,.16),rgba(255,255,255,.03));display:grid;place-items:center;border-bottom:1px solid var(--linea)}
 .portrait img{width:100%;height:100%;object-fit:cover;display:block}
 .portrait .ph{display:grid;place-items:center;gap:10px;text-align:center;padding:20px}
 .portrait .ph span{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--texto-2)}
 .speaker .body{padding:20px 22px 24px;display:flex;flex-direction:column;gap:6px;flex:1}
-.speaker .hora{font-family:var(--display);font-size:19px;color:var(--verde);letter-spacing:.05em}
-.speaker .titulo{font-weight:600;font-size:17px;line-height:1.3}
-.speaker .nombre{font-family:var(--display);font-size:25px;margin-top:6px}
-.speaker .cargo{font-size:14px;color:var(--texto-2)}
-.speaker .resumen{font-size:14.5px;color:var(--texto-2);margin-top:8px}
+.speaker .hora{font-family:var(--display);font-size:20px;color:var(--verde);letter-spacing:.05em}
+.speaker .titulo{font-weight:600;font-size:17.5px;line-height:1.3}
+.speaker .nombre{font-family:var(--display);font-size:27px;margin-top:6px;line-height:1.1}
+.speaker .cargo{font-size:15px;color:var(--texto-2);line-height:1.4}
+.speaker .resumen{font-size:15.5px;line-height:1.55;color:var(--texto-2);margin-top:10px}
 .pendiente{display:inline-flex;align-items:center;gap:7px;align-self:flex-start;margin-top:12px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--verde-hi);border:1px dashed rgba(124,240,180,.45);border-radius:999px;padding:5px 12px}
 
 /* ═══════════════ PROGRAMA ═══════════════ */
@@ -739,7 +742,7 @@ footer{padding:56px 0 70px;border-top:1px solid var(--linea);margin-top:20px}
       <div class="portrait">${retrato}</div>
       <div class="body">
         <div class="hora">${esc(ch.hora)}</div>
-        <div class="titulo">${esc(ch.titulo)}</div>
+        ${ch.titulo?`<div class="titulo">${esc(ch.titulo)}</div>`:""}
         <div class="nombre">${esc(ch.expositor)}</div>
         <div class="cargo">${esc(ch.cargo)}</div>
         ${ch.resumen?`<p class="resumen">${esc(ch.resumen)}</p>`:""}
@@ -753,8 +756,11 @@ footer{padding:56px 0 70px;border-top:1px solid var(--linea);margin-top:20px}
      de expositores no puedan quedar descuadrados: un solo lugar que editar. */
   const filasCharlas=(C.charlas||[]).filter(ch=>ch.hora).map((ch,i)=>{
     const exp=/por confirmar/i.test(ch.expositor||"")?"":ch.expositor;
-    return {hora:ch.hora, titulo:ch.titulo||`Charla ${i+1}`,
-            detalle:[L.charlas,exp].filter(Boolean).join(" · "), tipo:"charla"};
+    /* Sin tema definido, la fila se identifica con el expositor; cuando haya
+       título, el nombre pasa al detalle para no repetirse. */
+    const titulo=ch.titulo || (exp?`Charla · ${exp}`:`Charla ${i+1}`);
+    return {hora:ch.hora, titulo,
+            detalle:[L.charlas, ch.titulo?exp:""].filter(Boolean).join(" · "), tipo:"charla"};
   });
   const filasProg=[...(C.programa||[]),...filasCharlas]
     .sort((a,b)=>String(a.hora).localeCompare(String(b.hora)));
