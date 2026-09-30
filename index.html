@@ -88,8 +88,7 @@ const CONFIG = {
   //          cronograma muestra "Charla · <expositor>".
   charlas: [
     { hora: "09:45", titulo: "", expositor: "Pablo Videla", cargo: "Cybersecurity Mentor Team Lead y Consultor Senior en SEK", foto: "static/fotos/pablo-videla.jpg", resumen: "Lidera la Academia Hacker de SEK, donde forma y guía a nuevos talentos en hacking ético. Suma más de 10 años en ciberseguridad, con certificaciones OSCP, HTB CBBH, OPST y OPSA, y trayectoria en pentesting y seguridad ofensiva. Aporta además cuatro años en desarrollo de software y fue profesor invitado en el magíster de Ciberseguridad de la Universidad Mayor (2017)." },
-    { hora: "10:30", titulo: "", expositor: "Martin Tourneboeuf", cargo: "Pentester Senior en SEK", foto: "static/fotos/martin-tourneboeuf.jpg", resumen: "Integra el equipo de la Academia Hacker de SEK. Ingeniero de la École Polytechnique de París y magíster en Astronomía de la Universidad Católica, llegó a la seguridad ofensiva desde el análisis de malware y la ingeniería inversa en la Dirección General de Armamento de Francia. Antes validó el software del radiotelescopio ALMA y programa en C++, Rust, Python y ensamblador x86." },
-    { hora: "11:15", titulo: "Charla 3 — Por confirmar", expositor: "Por confirmar", cargo: "Especialista SEK", foto: "", resumen: "Tema en definición junto al equipo de SEK." }
+    { hora: "10:50", titulo: "", expositor: "Martin Tourneboeuf", cargo: "Pentester Senior en SEK", foto: "static/fotos/martin-tourneboeuf.jpg", resumen: "Integra el equipo de la Academia Hacker de SEK. Ingeniero de la École Polytechnique de París y magíster en Astronomía de la Universidad Católica, llegó a la seguridad ofensiva desde el análisis de malware y la ingeniería inversa en la Dirección General de Armamento de Francia. Antes validó el software del radiotelescopio ALMA y programa en C++, Rust, Python y ensamblador x86." }
   ],
 
   /* ── 7. PROGRAMA / CRONOGRAMA ────────────────────────────────────────── */
@@ -99,13 +98,15 @@ const CONFIG = {
   // Arreglo vacío [] y sin charlas = muestra el mensaje "en preparación".
   // { hora, titulo, detalle, tipo: "ctf" | "hito" }
   programa: [
-    { hora: "09:00", titulo: "Acreditación",                        detalle: "Foyer del Teatro DuocUC. Ten a mano tu código QR o correo de confirmación.", tipo: "hito" },
-    { hora: "09:30", titulo: "Bienvenida y saludos de autoridades", detalle: "Teatro DuocUC",                        tipo: "hito" },
-    { hora: "12:00", titulo: "Cierre de la mañana",                 detalle: "Teatro DuocUC",                        tipo: "hito" },
-    { hora: "12:15", titulo: "Descanso y traslado al CITT",         detalle: "Del Teatro al CITT, 6° piso del edificio CTI", tipo: "hito" },
-    { hora: "13:00", titulo: "Instrucciones y reglas del CTF",      detalle: "CITT, 6° piso · 15 minutos",           tipo: "ctf" },
-    { hora: "13:15", titulo: "Inicio de la competencia",            detalle: "CITT, 6° piso",                        tipo: "ctf" },
-    { hora: "18:00", titulo: "Cierre de los retos y premiación",     detalle: "Se congela el marcador y parte de inmediato la premiación. CITT, 6° piso", tipo: "hito" }
+    { hora: "09:00", titulo: "Recepción y acreditación",        detalle: "Foyer del Teatro DuocUC. Ten a mano tu código QR o correo de confirmación.", tipo: "hito" },
+    { hora: "09:30", titulo: "Bienvenida y apertura",           detalle: "Teatro DuocUC · 15 minutos",           tipo: "hito" },
+    { hora: "10:35", titulo: "Preguntas y respuestas",          detalle: "Teatro DuocUC · 15 minutos",           tipo: "hito" },
+    { hora: "11:40", titulo: "Preguntas y respuestas",          detalle: "Teatro DuocUC · 15 minutos",           tipo: "hito" },
+    { hora: "11:55", titulo: "Cierre y agradecimientos",        detalle: "Teatro DuocUC · indicaciones para la tarde", tipo: "hito" },
+    { hora: "12:00", titulo: "Descanso y traslado al CITT",     detalle: "Del Teatro al CITT, 6° piso del edificio CTI", tipo: "hito" },
+    { hora: "13:00", titulo: "Instrucciones y reglas del CTF",  detalle: "CITT, 6° piso · 15 minutos",           tipo: "ctf" },
+    { hora: "13:15", titulo: "Inicio de la competencia",        detalle: "CITT, 6° piso",                        tipo: "ctf" },
+    { hora: "18:00", titulo: "Cierre de los retos y premiación",detalle: "Se congela el marcador y parte de inmediato la premiación. CITT, 6° piso", tipo: "hito" }
   ],
 
   /* ── 8. GALERÍA HACKINGTA 2025 (carrusel) ────────────────────────────── */
@@ -307,8 +308,8 @@ header.nav{position:fixed;top:14px;left:0;right:0;z-index:60;display:flex;justif
 .aviso strong{color:var(--verde-hi);font-weight:600}
 
 /* ═══════════════ CHARLAS ═══════════════ */
-.speakers{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-@media (max-width:900px){.speakers{grid-template-columns:1fr 1fr}}
+/* Se centra y se adapta a cuantos expositores haya, sin dejar columnas vacías */
+.speakers{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,420px));justify-content:center;gap:18px}
 @media (max-width:620px){.speakers{grid-template-columns:1fr}}
 .speaker{border-radius:var(--r-lg);overflow:hidden;display:flex;flex-direction:column}
 .portrait{position:relative;aspect-ratio:4/5;background:linear-gradient(150deg,rgba(47,211,107,.16),rgba(255,255,255,.03));display:grid;place-items:center;border-bottom:1px solid var(--linea)}
