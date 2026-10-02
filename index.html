@@ -18,6 +18,7 @@ const CONFIG = {
     registroCTF:     "https://forms.cloud.microsoft/r/qpTkQk8YYS",      // Inscripción equipos CTF (incluye charlas)
     registroCharlas: "https://cittpass.cl/inscripcion/evento/38014",  // Inscripción solo charlas
     bases:           "https://canva.link/zwmnvg7uj2b6sj5",                                       // Bases y reglamento. Vacío = oculta el botón
+    transmision:     "https://www.youtube.com/watch?v=HpnK5gF5c9w",   // Transmisión en vivo. Vacío = oculta los botones
     contactoMail:    "martin.munoz@profesor.duoc.cl ó fel.caceress@profesor.duoc.cl ",
     duoc:            "https://www.duoc.cl/",
     sek:             "https://sek.io/es"
@@ -241,6 +242,16 @@ header.nav{position:fixed;top:14px;left:0;right:0;z-index:60;display:flex;justif
   backdrop-filter:blur(18px) saturate(170%);-webkit-backdrop-filter:blur(18px) saturate(170%);box-shadow:var(--specular)}
 .btn-glass:hover{background:linear-gradient(160deg,rgba(255,255,255,.2),rgba(255,255,255,.08))}
 .btn-sm{padding:11px 19px;font-size:15px}
+/* Transmisión en vivo: rojo contenido, para no competir con el verde del CTF */
+.btn-vivo{background:rgba(255,99,99,.12);border:1px solid rgba(255,99,99,.55);color:#FF9B9B}
+.btn-vivo:hover{background:rgba(255,99,99,.22);border-color:#FF9B9B;color:#FFBDBD}
+.btn-vivo .punto{width:9px;height:9px;border-radius:50%;background:#FF6B6B;flex:none;
+  box-shadow:0 0 0 0 rgba(255,107,107,.7);animation:latido 1.8s ease-out infinite}
+@keyframes latido{
+  0%{box-shadow:0 0 0 0 rgba(255,107,107,.65)}
+  70%{box-shadow:0 0 0 9px rgba(255,107,107,0)}
+  100%{box-shadow:0 0 0 0 rgba(255,107,107,0)}}
+@media (prefers-reduced-motion:reduce){.btn-vivo .punto{animation:none}}
 .btn-block{width:100%}
 .btn[hidden]{display:none}
 :focus-visible{outline:2.5px solid var(--verde-hi);outline-offset:3px;border-radius:6px}
@@ -487,6 +498,8 @@ footer{padding:56px 0 70px;border-top:1px solid var(--linea);margin-top:20px}
     <div class="hero-cta">
       <a class="btn btn-primary" id="ctaHeroCTF" href="#">Inscribir mi equipo al CTF</a>
       <a class="btn btn-glass" id="ctaHeroCharlas" href="#">Asistir solo a las charlas</a>
+      <a class="btn btn-vivo" id="ctaHeroVivo" href="#" hidden>
+        <span class="punto" aria-hidden="true"></span>Ver la transmisión en vivo</a>
     </div>
   </div>
 </section>
@@ -566,6 +579,8 @@ footer{padding:56px 0 70px;border-top:1px solid var(--linea);margin-top:20px}
         </ul>
         <div class="foot">
           <a class="btn btn-glass btn-block" id="ctaCharlas" href="#">Registrarme en las charlas</a>
+          <a class="btn btn-vivo btn-block btn-sm" id="ctaCharlasVivo" href="#" hidden>
+            <span class="punto" aria-hidden="true"></span>Ver la transmisión en vivo</a>
           <p class="small muted" style="margin:6px 0 0">Para quienes vienen únicamente a la mañana.</p>
         </div>
       </article>
@@ -654,6 +669,8 @@ footer{padding:56px 0 70px;border-top:1px solid var(--linea);margin-top:20px}
       <div class="btns">
         <a class="btn btn-primary" id="ctaFinCTF" href="#">Inscribir mi equipo al CTF</a>
         <a class="btn btn-glass" id="ctaFinCharlas" href="#">Asistir solo a las charlas</a>
+        <a class="btn btn-vivo" id="ctaFinVivo" href="#" hidden>
+          <span class="punto" aria-hidden="true"></span>Ver la transmisión en vivo</a>
       </div>
     </div>
   </div>
@@ -729,6 +746,12 @@ footer{padding:56px 0 70px;border-top:1px solid var(--linea);margin-top:20px}
   ["#ctaCTF","#ctaHeroCTF","#ctaFinCTF","#dockCTF"].forEach(s=>link(s,U.registroCTF));
   ["#ctaCharlas","#ctaHeroCharlas","#ctaFinCharlas","#dockCharlas"].forEach(s=>link(s,U.registroCharlas));
   if(U.bases){$("#ctaBases").hidden=false;link("#ctaBases",U.bases);}
+  if(U.transmision){
+    ["#ctaHeroVivo","#ctaCharlasVivo","#ctaFinVivo"].forEach(sel=>{
+      const el=$(sel); if(!el)return;
+      el.hidden=false; link(sel,U.transmision);
+    });
+  }
   ["#markDuoc","#navDuoc"].forEach(s=>link(s,U.duoc));
   ["#markSek","#navSek"].forEach(s=>link(s,U.sek));
   const m=$("#mailto"); m.href="mailto:"+U.contactoMail; m.textContent=U.contactoMail;
