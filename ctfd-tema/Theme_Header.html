@@ -1,0 +1,406 @@
+<!-- ══════════════════════════════════════════════════════════════════════════
+     HACKINGTA · TEMA CTFd — CABECERA
+     Pegar en:  Admin → Config → Theme → Theme Header
+     Paleta, tipografías, radios y vidrio tomados tal cual de la landing.
+     ══════════════════════════════════════════════════════════════════════════ -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+<style>
+/* ═══════════════ TOKENS ═══════════════ */
+:root{
+  --ink:#04100B; --ink-2:#0A1F16;
+  --verde:#2FD36B; --verde-hi:#7CF0B4; --verde-deep:#116B3A;
+  --texto:#F2F7F4; --texto-2:#A6BEB1;
+  --linea:rgba(255,255,255,.10);
+  --rojo:#FF7A7A; --ambar:#FFC94A;
+  --glass-bg:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.035));
+  --glass-brd:1px solid rgba(255,255,255,.14);
+  --glass-shadow:0 24px 60px -28px rgba(0,0,0,.85),0 2px 10px -6px rgba(0,0,0,.6);
+  --specular:inset 0 1px 0 rgba(255,255,255,.30),inset 0 -1px 0 rgba(255,255,255,.05);
+  --r-lg:30px; --r-md:20px; --r-sm:14px;
+  --maxw:min(1500px,94vw);
+  --display:"Barlow Condensed","Oswald","Helvetica Neue Condensed",-apple-system,BlinkMacSystemFont,sans-serif;
+  --body:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+
+/* ═══════════════ BASE Y FONDO ═══════════════ */
+/* El fondo va como capas sobre <html>, no como pseudo-elementos con z-index
+   negativo: en CTFd el <body> pinta su propia caja encima y los tapa. El
+   fondo de <html> se propaga al lienzo, así que cubre siempre todo el alto. */
+html{
+  background-color:var(--ink) !important;
+  background-image:
+    linear-gradient(180deg,transparent 42%,rgba(3,10,7,.92) 100%),
+    linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px),
+    radial-gradient(120% 80% at 18% -10%,rgba(47,211,107,.16),transparent 60%),
+    radial-gradient(90% 70% at 95% 8%,rgba(17,107,58,.22),transparent 62%),
+    linear-gradient(180deg,var(--ink-2) 0%,var(--ink) 45%,#030A07 100%) !important;
+  background-size:100% 100%,64px 64px,64px 64px,100% 100%,100% 100%,100% 100% !important;
+  background-repeat:no-repeat,repeat,repeat,no-repeat,no-repeat,no-repeat !important;
+  background-attachment:fixed !important;
+  background-position:0 0 !important;
+}
+/* Transparente para no tapar el lienzo. Lo mismo con los contenedores que
+   CTFd pinta de oscuro. */
+body,#content,main,.main,.content,.container-fluid,footer{background:transparent !important}
+body{
+  color:var(--texto) !important;
+  font-family:var(--body) !important;
+  font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+::selection{background:rgba(47,211,107,.32)}
+:focus-visible{outline:2.5px solid var(--verde-hi) !important;outline-offset:3px;border-radius:6px}
+
+/* Barra de desplazamiento al tono */
+*{scrollbar-color:rgba(47,211,107,.45) transparent;scrollbar-width:thin}
+*::-webkit-scrollbar{width:10px;height:10px}
+*::-webkit-scrollbar-thumb{background:rgba(47,211,107,.35);border-radius:999px;border:2px solid transparent;background-clip:content-box}
+*::-webkit-scrollbar-thumb:hover{background:rgba(47,211,107,.6);background-clip:content-box}
+*::-webkit-scrollbar-track{background:transparent}
+
+/* ═══════════════ TIPOGRAFÍA ═══════════════ */
+h1,h2,h3,h4,.display{
+  font-family:var(--display) !important;
+  font-weight:700 !important;
+  letter-spacing:.005em !important;
+  line-height:.98 !important;
+  text-transform:uppercase !important;
+  color:var(--texto) !important;
+  text-shadow:none !important;
+}
+h1{font-size:clamp(38px,6vw,64px) !important}
+h2{font-size:clamp(30px,4.4vw,46px) !important}
+h3{font-size:clamp(21px,2.6vw,27px) !important}
+h4{font-size:19px !important}
+h5,h6{font-family:var(--body) !important;font-weight:600 !important;text-transform:none !important;color:var(--texto) !important}
+a{color:var(--verde-hi);text-decoration:none}
+a:hover{color:var(--verde);text-decoration:underline}
+strong,b{color:var(--texto)}
+small,.small{font-size:14px}
+.text-muted,.muted{color:var(--texto-2) !important}
+code,kbd{font-family:var(--mono) !important;color:var(--verde-hi);background:rgba(47,211,107,.10);
+  padding:2px 7px;border-radius:6px;font-size:.88em}
+pre{font-family:var(--mono) !important;background:rgba(0,0,0,.45) !important;color:var(--texto) !important;
+  border:1px solid var(--linea);border-radius:var(--r-sm);padding:14px 16px;overflow-x:auto;font-size:.88em}
+pre code{background:none;padding:0;color:var(--verde-hi)}
+hr{border:0;height:1px;background:linear-gradient(90deg,var(--verde),rgba(47,211,107,0));opacity:1}
+
+/* Cabeceras de página de CTFd, sin caja */
+.jumbotron,.page-header{
+  background:transparent !important;
+  border:0 !important; box-shadow:none !important;
+  margin-bottom:0 !important; padding:56px 0 26px !important;
+}
+.jumbotron h1,.page-header h1{margin-bottom:.3em}
+
+/* Se ocultan los conmutadores de tema: el sitio es oscuro siempre */
+.fa-moon,.fa-sun{display:none !important}
+
+/* ═══════════════ VIDRIO ═══════════════ */
+.hk-glass,.card,.modal-content,.list-group-item,.bg-light,.bg-white,.bg-dark,.bg-secondary{
+  background:var(--glass-bg) !important;
+  border:var(--glass-brd) !important;
+  color:var(--texto) !important;
+  border-radius:var(--r-md) !important;
+  box-shadow:var(--glass-shadow),var(--specular);
+  backdrop-filter:blur(26px) saturate(180%);
+  -webkit-backdrop-filter:blur(26px) saturate(180%);
+}
+.card{overflow:hidden}
+/* Reflejo que sigue al cursor, igual que en la landing (lo mueve el pie) */
+.hk-glass,.card,.challenge-button{position:relative}
+.hk-glass::after,.card::after,.challenge-button::after{content:"";position:absolute;inset:0;pointer-events:none;
+  opacity:0;transition:opacity .35s ease;border-radius:inherit;
+  background:radial-gradient(340px circle at var(--mx,50%) var(--my,0%),rgba(255,255,255,.13),transparent 65%)}
+.hk-glass:hover::after,.card:hover::after,.challenge-button:hover::after{opacity:1}
+.card-header,.modal-header{
+  background:rgba(255,255,255,.04) !important;
+  border-bottom:1px solid var(--linea) !important;
+  color:var(--texto) !important;
+}
+.card-footer,.modal-footer{
+  background:rgba(0,0,0,.18) !important;
+  border-top:1px solid var(--linea) !important;
+}
+.modal-content{border-radius:var(--r-lg) !important;border-color:rgba(47,211,107,.28) !important}
+.modal-backdrop.show{opacity:.72}
+.close,.btn-close{color:var(--texto) !important;opacity:.75 !important;text-shadow:none !important;filter:invert(1) grayscale(1) brightness(2)}
+.close:hover,.btn-close:hover{opacity:1 !important}
+
+/* ═══════════════ BARRA DE NAVEGACIÓN ═══════════════ */
+/* Píldora flotante como en la landing. Va en flujo (sticky) para que el
+   contenido no se meta debajo ni haya que compensar con padding. */
+.navbar{
+  position:sticky; top:12px; z-index:1030;
+  width:min(100% - 24px,1500px);
+  margin:12px auto 20px !important;
+  padding:8px 10px 8px 20px !important;
+  border-radius:999px !important;
+  background:linear-gradient(160deg,rgba(255,255,255,.11),rgba(255,255,255,.04)) !important;
+  border:var(--glass-brd) !important;
+  box-shadow:var(--glass-shadow),var(--specular);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  transition:background .3s ease;
+}
+@media(max-width:767px){.navbar{border-radius:var(--r-md) !important;padding:10px 14px !important}}
+.navbar-brand{display:flex;align-items:center;padding:0 !important;margin-right:18px !important}
+.navbar-brand .ctf_logo{height:46px !important;width:auto !important;max-height:none !important;display:block}
+@media(max-width:600px){.navbar-brand .ctf_logo{height:38px !important}}
+.navbar .nav-link{
+  color:var(--texto-2) !important;
+  font-size:15px; font-weight:500;
+  padding:8px 14px !important; border-radius:999px;
+  transition:color .2s,background .2s;
+}
+.navbar .nav-link:hover{color:var(--texto) !important;background:rgba(255,255,255,.08);text-decoration:none}
+.navbar .nav-link.active{color:var(--verde-hi) !important}
+.navbar-toggler{border:var(--glass-brd) !important;border-radius:12px !important;padding:6px 10px !important}
+.navbar-toggler-icon{filter:brightness(2)}
+.dropdown-menu{
+  background:linear-gradient(160deg,rgba(18,32,26,.98),rgba(10,22,17,.98)) !important;
+  border:var(--glass-brd) !important; border-radius:var(--r-sm) !important;
+  box-shadow:var(--glass-shadow); padding:6px !important;
+  backdrop-filter:blur(20px);
+}
+.dropdown-item{color:var(--texto) !important;border-radius:9px;padding:8px 12px !important}
+.dropdown-item:hover,.dropdown-item:focus{background:rgba(47,211,107,.16) !important;color:var(--verde-hi) !important}
+.dropdown-divider{border-color:var(--linea) !important}
+
+/* ═══════════════ BOTONES ═══════════════ */
+.btn{
+  font-family:var(--body) !important; font-weight:600 !important;
+  border-radius:999px !important; border:1px solid transparent;
+  padding:11px 24px !important; font-size:15.5px !important;
+  text-transform:none !important; letter-spacing:0 !important;
+  transition:transform .18s cubic-bezier(.2,.9,.3,1.2),box-shadow .25s,background .25s;
+}
+.btn:active{transform:scale(.97)}
+.btn-sm{padding:8px 17px !important;font-size:14px !important}
+.btn-lg{padding:14px 30px !important;font-size:17px !important}
+
+.btn-primary,.btn-success{
+  background:var(--verde) !important; color:#04180D !important; border-color:transparent !important;
+  box-shadow:0 12px 30px -14px rgba(47,211,107,.9);
+}
+.btn-primary:hover,.btn-success:hover{
+  background:var(--verde-hi) !important; color:#04180D !important;
+  box-shadow:0 16px 38px -14px rgba(124,240,180,.85);
+}
+.btn-secondary,.btn-dark,.btn-light,.btn-info{
+  background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.05)) !important;
+  border:var(--glass-brd) !important; color:var(--texto) !important;
+  box-shadow:var(--specular);
+  backdrop-filter:blur(18px) saturate(170%);
+  -webkit-backdrop-filter:blur(18px) saturate(170%);
+}
+.btn-secondary:hover,.btn-dark:hover,.btn-light:hover,.btn-info:hover{
+  background:linear-gradient(160deg,rgba(255,255,255,.20),rgba(255,255,255,.08)) !important;
+  color:var(--texto) !important;
+}
+.btn-outline-secondary,.btn-outline-primary,.btn-outline-light{
+  background:transparent !important; border:1px solid var(--verde) !important; color:var(--verde-hi) !important;
+}
+.btn-outline-secondary:hover,.btn-outline-primary:hover,.btn-outline-light:hover{
+  background:var(--verde) !important; color:#04180D !important;
+}
+.btn-danger{background:rgba(255,122,122,.14) !important;border:1px solid var(--rojo) !important;color:var(--rojo) !important;box-shadow:none}
+.btn-danger:hover{background:rgba(255,122,122,.26) !important}
+.btn-warning{background:rgba(255,201,74,.14) !important;border:1px solid var(--ambar) !important;color:var(--ambar) !important;box-shadow:none}
+.btn-warning:hover{background:rgba(255,201,74,.26) !important}
+
+/* ═══════════════ FORMULARIOS ═══════════════ */
+.form-control,input.form-control,textarea.form-control,select.form-control,.custom-select,.input-group-text{
+  background:rgba(0,0,0,.30) !important;
+  border:1px solid var(--linea) !important;
+  color:var(--texto) !important;
+  border-radius:var(--r-sm) !important;
+  padding:12px 15px !important;
+  font-family:var(--body) !important; font-size:15.5px !important;
+}
+.form-control::placeholder{color:rgba(166,190,177,.65) !important}
+.form-control:focus{
+  background:rgba(0,0,0,.45) !important;
+  border-color:var(--verde) !important;
+  box-shadow:0 0 0 3px rgba(47,211,107,.22) !important;
+  color:var(--texto) !important;
+}
+label,.form-label{color:var(--texto-2);font-size:14.5px;font-weight:500}
+.form-text{color:var(--texto-2) !important}
+
+/* ═══════════════ RETOS ═══════════════ */
+.challenge-button{
+  background:var(--glass-bg) !important;
+  border:var(--glass-brd) !important;
+  border-radius:var(--r-md) !important;
+  box-shadow:var(--glass-shadow),var(--specular);
+  backdrop-filter:blur(20px) saturate(170%);
+  -webkit-backdrop-filter:blur(20px) saturate(170%);
+  color:var(--texto) !important;
+  text-decoration:none !important;
+  font-family:var(--display) !important;
+  transition:transform .22s cubic-bezier(.2,.9,.3,1.2),box-shadow .28s,border-color .28s,background .28s;
+}
+.challenge-button:hover{
+  background:linear-gradient(160deg,rgba(255,255,255,.16),rgba(255,255,255,.06)) !important;
+  border-color:rgba(47,211,107,.55) !important;
+  transform:translateY(-5px);
+  box-shadow:0 26px 54px -26px rgba(0,0,0,.9),0 0 34px -10px rgba(47,211,107,.5),var(--specular);
+}
+/* Resuelto: verde sostenido, sin apagar el texto */
+.challenge-button.challenge-solved,.challenge-button.solved{
+  background:linear-gradient(160deg,rgba(47,211,107,.28),rgba(47,211,107,.12)) !important;
+  border:1px solid var(--verde) !important;
+  box-shadow:0 0 30px -8px rgba(47,211,107,.55),var(--specular) !important;
+  opacity:1 !important;
+  color:var(--texto) !important;
+}
+.challenge-button.challenge-solved:hover,.challenge-button.solved:hover{
+  background:linear-gradient(160deg,rgba(47,211,107,.40),rgba(47,211,107,.18)) !important;
+  transform:translateY(-3px);
+}
+/* Marca de resuelto en la esquina.
+   Va en ::before porque ::after ya lo ocupa el reflejo del vidrio. */
+.challenge-button.challenge-solved::before,.challenge-button.solved::before{
+  content:"✓"; position:absolute; top:9px; right:14px; z-index:2;
+  font-family:var(--body); font-weight:700; font-size:15px; line-height:1;
+  color:var(--verde-hi); opacity:.95; pointer-events:none;
+}
+.challenge-button{position:relative}
+.challenge-category,.challenge-value{font-family:var(--body) !important}
+
+/* Ventana del reto */
+#challenge-window .modal-content,#challenge-window{border-radius:var(--r-lg) !important}
+.challenge-desc{color:var(--texto) !important;font-size:16px;line-height:1.65}
+
+/* ═══════════════ PESTAÑAS ═══════════════ */
+.nav-tabs{border-bottom:1px solid var(--linea) !important}
+.nav-tabs .nav-link{
+  color:var(--texto-2) !important; border:0 !important;
+  background:transparent !important; border-radius:0 !important;
+  font-weight:600; padding:12px 18px !important;
+}
+.nav-tabs .nav-link:hover{color:var(--texto) !important}
+.nav-tabs .nav-link.active{
+  color:var(--verde-hi) !important; background:transparent !important;
+  border-bottom:2px solid var(--verde) !important;
+}
+.nav-pills .nav-link.active{background:var(--verde) !important;color:#04180D !important;border-radius:999px !important}
+
+/* ═══════════════ TABLAS Y MARCADOR ═══════════════ */
+.table{
+  color:var(--texto) !important;
+  border-collapse:separate; border-spacing:0;
+  overflow:hidden; border-radius:var(--r-md);
+}
+.table thead th{
+  background:rgba(255,255,255,.05) !important;
+  color:var(--verde) !important;
+  font-family:var(--display) !important; font-weight:700;
+  text-transform:uppercase; letter-spacing:.04em; font-size:16px;
+  border:0 !important; border-bottom:1px solid var(--linea) !important;
+  padding:14px 16px !important;
+}
+.table td{
+  border:0 !important; border-top:1px solid rgba(255,255,255,.06) !important;
+  padding:13px 16px !important; vertical-align:middle;
+}
+.table tbody tr{transition:background .2s}
+.table tbody tr:hover{background:rgba(47,211,107,.07) !important}
+.table-striped tbody tr:nth-of-type(odd){background:rgba(255,255,255,.02) !important}
+/* Podio del marcador */
+.table tbody tr:nth-child(1) td:first-child{color:#FFD65A;font-weight:700}
+.table tbody tr:nth-child(2) td:first-child{color:#D8E3DC;font-weight:700}
+.table tbody tr:nth-child(3) td:first-child{color:#E0A46B;font-weight:700}
+
+/* ═══════════════ AVISOS, INSIGNIAS, PAGINACIÓN ═══════════════ */
+.alert{border-radius:var(--r-sm) !important;border:1px solid var(--linea) !important;
+  background:rgba(255,255,255,.05) !important;color:var(--texto) !important}
+.alert-success{background:rgba(47,211,107,.12) !important;border-color:rgba(47,211,107,.4) !important;color:var(--verde-hi) !important}
+.alert-danger{background:rgba(255,122,122,.10) !important;border-color:rgba(255,122,122,.4) !important;color:var(--rojo) !important}
+.alert-warning{background:rgba(255,201,74,.10) !important;border-color:rgba(255,201,74,.4) !important;color:var(--ambar) !important}
+.alert-info{background:rgba(47,211,107,.08) !important;border-color:rgba(47,211,107,.28) !important;color:var(--texto) !important}
+
+.badge{border-radius:999px !important;font-weight:600;padding:5px 12px !important;font-size:12.5px !important}
+.badge-primary,.bg-primary{background:var(--verde) !important;color:#04180D !important}
+.badge-secondary{background:rgba(255,255,255,.12) !important;color:var(--texto) !important}
+
+.pagination .page-link{
+  background:transparent !important;border:1px solid var(--linea) !important;
+  color:var(--texto-2) !important;border-radius:10px !important;margin:0 3px;
+}
+.pagination .page-link:hover{border-color:var(--verde) !important;color:var(--verde-hi) !important}
+.pagination .page-item.active .page-link{background:var(--verde) !important;border-color:var(--verde) !important;color:#04180D !important}
+
+.progress{background:rgba(0,0,0,.35) !important;border-radius:999px !important;height:10px}
+.progress-bar{background:var(--verde) !important}
+
+/* ═══════════════ PLUGIN DYNAMIC ORCHESTRATOR ═══════════════ */
+[data-dynamic-beta-banner]{
+  display:flex !important; align-items:center; gap:10px;
+  background:rgba(255,201,74,.10) !important;
+  border:1px solid rgba(255,201,74,.42) !important;
+  color:var(--ambar) !important;
+  border-radius:var(--r-sm) !important;
+  margin-bottom:15px !important; padding:11px 16px !important;
+  font-size:14.5px;
+}
+[data-dynamic-beta-banner].d-none{display:none !important}
+[data-dynamic-beta-banner] *{color:var(--ambar) !important}
+
+html body #dynamic-challenge-root .dynamic-card{
+  background:var(--glass-bg) !important;
+  border:1px solid rgba(47,211,107,.28) !important;
+  border-radius:var(--r-md) !important;
+  box-shadow:var(--glass-shadow),var(--specular) !important;
+  backdrop-filter:blur(22px) saturate(175%);
+  color:var(--texto) !important;
+  padding:22px 22px 18px !important; margin-top:15px !important;
+}
+html body #dynamic-challenge-root,
+html body #dynamic-challenge-root p,
+html body #dynamic-challenge-root span,
+html body #dynamic-challenge-root div,
+html body #dynamic-challenge-root strong{color:var(--texto) !important}
+
+html body #dynamic-challenge-root .dynamic-hint{
+  background:rgba(0,0,0,.55) !important;
+  border:1px solid var(--verde) !important;
+  color:var(--verde-hi) !important;
+  font-family:var(--mono) !important;
+  padding:13px 15px !important; border-radius:var(--r-sm) !important;
+  word-break:break-all;
+}
+html body #dynamic-challenge-root .dynamic-hint *{color:var(--verde-hi) !important}
+html body #dynamic-challenge-root a{
+  color:var(--verde-hi) !important; text-decoration:none !important;
+  font-weight:600 !important; border-bottom:1px dashed var(--verde);
+}
+html body #dynamic-challenge-root .btn{border-radius:999px !important;text-transform:none;font-weight:600;
+  margin-top:12px !important;margin-bottom:0 !important}
+
+/* Hueco bajo la fila de botones: el plugin deja <p> y <div> vacíos al final,
+   y el último hijo arrastra su margen. :empty es dinámico, así que si el
+   plugin los rellena después vuelven a mostrarse solos. */
+html body #dynamic-challenge-root p:empty,
+html body #dynamic-challenge-root div:empty{display:none !important}
+html body #dynamic-challenge-root .dynamic-card > :last-child{margin-bottom:0 !important}
+html body #dynamic-challenge-root .btn-secondary{
+  background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.05)) !important;
+  border:var(--glass-brd) !important; color:var(--texto) !important;
+}
+html body #dynamic-challenge-root .btn-danger{
+  background:rgba(255,122,122,.14) !important;border:1px solid var(--rojo) !important;color:var(--rojo) !important;
+}
+html body #dynamic-challenge-root .btn-warning{
+  background:rgba(255,201,74,.14) !important;border:1px solid var(--ambar) !important;color:var(--ambar) !important;
+}
+</style>

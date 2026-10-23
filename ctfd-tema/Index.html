@@ -1,0 +1,538 @@
+<!-- ══════════════════════════════════════════════════════════════════════════
+     HACKINGTA · TEMA CTFd — PÁGINA DE INICIO
+     Pegar en:  Admin → Config → Theme → Index Page Content
+     Requiere la cabecera (Theme Header) para tomar la paleta y las fuentes.
+     ══════════════════════════════════════════════════════════════════════════ -->
+<script>
+/* ══════════════════════════════════════════════════════════════════════════
+   ⚙️  CONFIGURACIÓN — EDITA SOLO ESTE BLOQUE
+   Nombres, enlaces, archivos, logos, direcciones y reglas.
+   ══════════════════════════════════════════════════════════════════════════ */
+window.HK_CTF = {
+
+  /* ── 1. EVENTO ────────────────────────────────────────────────────────── */
+  evento: {
+    nombre:   "HACKINGTA",
+    anio:     "2026",
+    bajada:   "Capture the Flag",
+    pitch:    "Trabajo en equipo, colaboración y destreza. Cinco horas de retos contra el reloj.",
+    modalidad:"Competencia grupal · presencial"
+  },
+
+  /* ── 2. LOGOS  🖼️  (súbelos en Admin → Files y pega aquí la ruta) ─────── */
+  // Deja "" para ocultar el que no tengas.
+  logos: [
+    { src: "/files/12a26d789a0e8a58b34b6c8a777d103e/SEK_RGB_Horizontal_Descritivo_Negativo.png", alt: "SEK", alto: 40 },
+    { src: "", alt: "Hackingta",                                   alto: 46 },
+    { src: "", alt: "DuocUC Escuela de Informática y Telecom.",    alto: 40 }
+  ],
+
+  /* ── 3. ENLACES Y ARCHIVOS  🔗 ───────────────────────────────────────── */
+  urls: {
+    plataforma: "https://ctfd-fidae.ctfchile.com",   // registro / login
+    vpn:        "/files/c85f5c8503cee28f936d0426d5cac25f/VPN-BCH2026.ovpn",
+    vpnNombre:  "VPN-BCH2026.ovpn",                  // nombre del archivo, para el comando
+    reglamento: "",                                   // PDF de bases. "" = oculta el botón
+    soporte:    ""                                    // Telegram/Discord. "" = oculta el botón
+  },
+
+  /* ── 4. ACCESO ───────────────────────────────────────────────────────── */
+  acceso: {
+    codigoNota: "Entregado en el evento: pregunta al staff.",
+    equipos:    4     // integrantes por equipo. 0 = no se menciona
+  },
+
+  /* ── 5. INFRAESTRUCTURA  🖧 ──────────────────────────────────────────── */
+  infra: {
+    publica:  "http://ctf.ctfchile.com:8080",
+    deploy:   "deploy.ctfchile.com",
+    duracion: "2 horas",
+    extension:"+10 min",
+    maxExt:   3,
+    scope: [
+      "ctf.ctfchile.com:PUERTO",
+      "deploy.ctfchile.com:PUERTO",
+      "Escaneos moderados (con límite de velocidad)"
+    ]
+  },
+
+  /* ── 6. REQUISITOS TÉCNICOS ──────────────────────────────────────────── */
+  requisitos: [
+    { t: "Sistema operativo", d: "Kali Linux o Parrot OS recomendados, o tu distro con herramientas." },
+    { t: "Virtualización",    d: "VMware, VirtualBox o WSL2 si trabajas en Windows o Mac." },
+    { t: "Herramientas",      d: "Burp Suite, nmap, ffuf o dirb, netcat y curl." },
+    { t: "Navegador",         d: "Chrome, Firefox o Edge actualizado." }
+  ],
+
+  /* ── 7. REGLAS DE INSTANCIA POR EQUIPO ───────────────────────────────── */
+  reglasEquipo: [
+    "Cualquier integrante puede levantar la instancia privada de un reto.",
+    "Solo una instancia por reto: si un compañero ya lo levantó, elige otro.",
+    "Las instancias son visibles para todo el equipo; todos ven la URL.",
+    "Cualquier integrante puede detener o reiniciar una instancia activa."
+  ],
+
+  /* ── 8. PROHIBICIONES  ⛔  (tolerancia cero) ──────────────────────────── */
+  prohibiciones: [
+    "Atacar la infraestructura del evento, la plataforma o sistemas fuera de los retos",
+    "DoS, DDoS o cualquier acción que sature o degrade los sistemas",
+    "Atacar o interferir con otros participantes",
+    "Corromper retos: eliminar u ofuscar flags, o alterar desafíos",
+    "Ataques automatizados o actividad fuera del entorno del CTF",
+    "Compartir flags o soluciones entre equipos",
+    "Publicar write-ups o soluciones mientras la competencia esté en curso"
+  ],
+
+  /* ── 10. CÓDIGO DE HONOR · USO DE IA  🤖 ─────────────────────────────── */
+  honor: {
+    lede: "Hackingta busca aprendizaje, colaboración y pensamiento crítico. Por eso la inteligencia artificial se permite como apoyo, nunca como reemplazo de tu propio análisis.",
+    lema: "La IA puede ayudarme a aprender, pero no competir por mí.",
+    permitido: [
+      "Consultar conceptos, recordar sintaxis y entender mensajes de error.",
+      "Pedir explicaciones u orientación general sobre herramientas y técnicas.",
+      "Revisar código que escribiste tú.",
+      "Automatizar con scripts y herramientas, siempre que entiendas lo que hacen."
+    ],
+    prohibido: [
+      "Entregarle a una IA el enunciado, los archivos o el servicio para que resuelva el desafío, identifique la vulnerabilidad o te dé la flag.",
+      "Usar agentes o sistemas autónomos que analicen, ejecuten herramientas, interpreten resultados y busquen flags sin tu participación real."
+    ],
+    reglas: [
+      { t: "El análisis es del equipo", d: "El razonamiento, la identificación de vulnerabilidades y la obtención de las flags las hacen sus integrantes." },
+      { t: "Debes poder explicar lo que hiciste", d: "El staff puede pedirte que describas la vulnerabilidad, las técnicas y el procedimiento usado." },
+      { t: "La competencia se monitorea", d: "La plataforma y la infraestructura generan registros que el staff puede revisar." },
+      { t: "Una sospecha no es una sanción", d: "Ante actividad anómala se te pedirá primero explicar tu procedimiento." }
+    ],
+    consecuencias: "Con evidencia suficiente de resolución automática sin comprensión ni participación efectiva, el staff puede invalidar el desafío, quitar el puntaje asociado o descalificar al equipo, según la gravedad."
+  },
+
+  /* ── 9. AVISOS FINALES ───────────────────────────────────────────────── */
+  avisos: [
+    { t: "Nombres de equipo", d: "Deben ser apropiados al contexto. La organización puede solicitar cambios.", tono: "ambar" },
+    { t: "Nota ética",        d: "Toda actividad fuera del alcance puede terminar en descalificación. Los sistemas registran logs.", tono: "neutro" }
+  ]
+};
+</script>
+
+<style>
+/* ═══════════ ESTRUCTURA DE LA PORTADA ═══════════ */
+.hk-wrap{width:min(100% - 40px,min(1100px,94vw));margin:0 auto;padding:10px 0 80px}
+
+/* Portada */
+.hk-hero{text-align:center;padding:26px 0 8px}
+.hk-marcas{display:flex;justify-content:center;align-items:center;gap:38px;flex-wrap:wrap;
+  padding:20px 28px;margin-bottom:38px;border-radius:var(--r-md);
+  background:linear-gradient(160deg,rgba(255,255,255,.08),rgba(255,255,255,.03));
+  border:var(--glass-brd);box-shadow:var(--specular);
+  backdrop-filter:blur(18px) saturate(170%);-webkit-backdrop-filter:blur(18px) saturate(170%)}
+.hk-marcas img{width:auto;max-width:none;display:block;opacity:.85;transition:opacity .2s}
+.hk-marcas img:hover{opacity:1}
+@media(max-width:560px){.hk-marcas{gap:22px;padding:16px 18px}}
+
+.hk-hero h1{font-size:clamp(44px,9vw,104px) !important;margin:0 0 10px}
+.hk-hero h1 .anio{color:var(--verde)}
+.hk-hero .bajada{font-family:var(--display);font-size:clamp(19px,3vw,30px);color:var(--verde);
+  text-transform:uppercase;letter-spacing:.06em;margin:0 0 14px;line-height:1}
+.hk-hero .pitch{font-size:clamp(16px,2vw,19px);color:#D9E7DF;max-width:56ch;margin:0 auto 18px}
+.hk-chip{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--verde-hi);border:1px solid rgba(47,211,107,.4);
+  border-radius:999px;padding:6px 16px}
+
+/* Encabezado de sección numerado, como en la landing */
+.hk-sec{margin-top:clamp(52px,7vw,84px)}
+.hk-sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 24px;margin-bottom:18px}
+.hk-sec-head .n{font-family:var(--display);font-size:15px;color:var(--verde);
+  border:1px solid rgba(47,211,107,.4);border-radius:999px;padding:3px 13px;letter-spacing:.06em;flex:none}
+.hk-sec-head h2{font-size:clamp(28px,4.4vw,44px) !important;margin:0 !important}
+.hk-rule{border:0;height:1px;background:linear-gradient(90deg,var(--verde),rgba(47,211,107,0));margin:0 0 26px}
+
+/* Tarjetas */
+.hk-card{border-radius:var(--r-lg);padding:clamp(20px,3vw,30px);
+  background:var(--glass-bg);border:var(--glass-brd);
+  box-shadow:var(--glass-shadow),var(--specular);
+  backdrop-filter:blur(26px) saturate(180%);-webkit-backdrop-filter:blur(26px) saturate(180%);
+  overflow:hidden;position:relative}
+.hk-card + .hk-card{margin-top:18px}
+.hk-card h3{margin:0 0 6px !important}
+
+.hk-g2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:820px){.hk-g2{grid-template-columns:1fr}}
+.hk-auto{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+
+/* Listas con viñeta verde */
+.hk-lista{list-style:none;padding:0;margin:0}
+.hk-lista li{position:relative;padding:9px 0 9px 22px;font-size:15.5px;color:var(--texto-2);
+  border-top:1px solid rgba(255,255,255,.06)}
+.hk-lista li:first-child{border-top:0}
+.hk-lista li::before{content:"";position:absolute;left:2px;top:17px;width:8px;height:8px;
+  border-radius:3px;background:var(--verde);opacity:.85}
+.hk-lista li b{color:var(--texto);font-weight:600}
+
+/* Fichas de dato */
+.hk-dato{display:flex;align-items:center;gap:11px;padding:12px 15px;border-radius:var(--r-sm);
+  background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.06);font-size:14.5px;color:var(--texto-2)}
+.hk-dato b{color:var(--texto)}
+.hk-dato .ic{font-size:17px;min-width:22px;text-align:center}
+
+/* Etiquetas de alcance */
+.hk-tags{display:flex;flex-wrap:wrap;gap:10px}
+.hk-tag{display:inline-flex;align-items:center;gap:8px;padding:9px 15px;border-radius:999px;
+  font-family:var(--mono);font-size:13.5px;
+  background:rgba(47,211,107,.09);border:1px solid rgba(47,211,107,.3);color:var(--verde-hi)}
+
+/* Permitido (espejo de las prohibiciones, en verde) */
+.hk-si{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:var(--r-sm);
+  background:rgba(47,211,107,.06);border:1px solid rgba(47,211,107,.2);
+  font-size:14.5px;color:var(--texto-2);line-height:1.45}
+.hk-si::before{content:"✓";color:var(--verde);font-weight:700;flex:none;opacity:.9;line-height:1.45}
+
+/* Compromiso del participante */
+.hk-lema{text-align:center;padding:26px 24px;border-radius:var(--r-md);
+  background:linear-gradient(160deg,rgba(47,211,107,.12),rgba(47,211,107,.03));
+  border:1px solid rgba(47,211,107,.3)}
+.hk-lema .frase{font-family:var(--display);font-size:clamp(22px,3.2vw,34px);
+  text-transform:uppercase;color:var(--verde-hi);line-height:1.05;margin-bottom:10px}
+.hk-lema p{margin:0;font-size:14.5px;color:var(--texto-2);max-width:62ch;margin-inline:auto}
+
+/* Prohibiciones */
+.hk-no{display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-radius:var(--r-sm);
+  background:rgba(255,122,122,.06);border:1px solid rgba(255,122,122,.18);
+  font-size:14.5px;color:var(--texto-2);line-height:1.45}
+.hk-no::before{content:"✕";color:var(--rojo);font-weight:700;flex:none;opacity:.8;line-height:1.45}
+
+/* Avisos */
+.hk-aviso{display:flex;gap:12px;padding:15px 18px;border-radius:var(--r-sm);align-items:flex-start}
+.hk-aviso + .hk-aviso{margin-top:10px}
+.hk-aviso.ambar{background:rgba(255,201,74,.07);border:1px solid rgba(255,201,74,.22)}
+.hk-aviso.neutro{background:rgba(255,255,255,.03);border:1px solid var(--linea)}
+.hk-aviso .t{font-weight:600;display:block;margin-bottom:2px}
+.hk-aviso.ambar .t{color:var(--ambar)}
+.hk-aviso p{margin:0;font-size:14.5px;color:var(--texto-2)}
+
+/* Bloque destacado de despliegue */
+.hk-destacado{border-radius:var(--r-lg);overflow:hidden;
+  background:linear-gradient(160deg,rgba(47,211,107,.09),rgba(47,211,107,.02));
+  border:1px solid rgba(47,211,107,.28)}
+.hk-destacado-head{display:flex;align-items:center;gap:13px;padding:18px 24px;
+  background:rgba(47,211,107,.09);border-bottom:1px solid rgba(47,211,107,.16)}
+.hk-destacado-head h3{color:var(--verde) !important;margin:0 !important;font-size:23px !important}
+.hk-destacado-head .pill{font-family:var(--body);font-size:11.5px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;background:var(--verde);color:#04180D;padding:3px 10px;border-radius:999px}
+.hk-destacado-body{padding:24px}
+
+/* Terminal de ejemplo */
+.hk-term{border-radius:var(--r-md);overflow:hidden;background:rgba(0,0,0,.5);
+  border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.hk-term-bar{display:flex;align-items:center;gap:6px;padding:10px 16px;
+  background:rgba(255,255,255,.04);border-bottom:1px solid rgba(255,255,255,.08)}
+.hk-dot{width:10px;height:10px;border-radius:50%}
+.hk-dot:nth-child(1){background:#ff5f57}.hk-dot:nth-child(2){background:#febc2e}.hk-dot:nth-child(3){background:#28c840}
+.hk-term-bar .ruta{margin-left:12px;font-family:var(--mono);font-size:12px;color:var(--texto-2)}
+.hk-term-body{padding:22px;text-align:center}
+.hk-term-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:10px}
+.hk-term-head .titulo{font-family:var(--display);font-size:19px;text-transform:uppercase}
+.hk-term-head .etq{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ambar);
+  border:1px solid rgba(255,201,74,.3);background:rgba(255,201,74,.08);padding:4px 10px;border-radius:999px}
+.hk-sim{display:flex;align-items:center;gap:9px;padding:11px 20px;text-align:left;
+  background:rgba(255,201,74,.06);border-top:1px solid rgba(255,201,74,.15);
+  color:rgba(255,213,79,.75);font-size:13px}
+.hk-panel{display:none;text-align:left;animation:hkUp .45s ease}
+@keyframes hkUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.hk-url{background:rgba(0,0,0,.6);border:1px solid var(--verde);color:var(--verde-hi);
+  font-family:var(--mono);padding:13px;border-radius:var(--r-sm);margin-bottom:14px;
+  font-size:14px;word-break:break-all}
+.hk-fila{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:14px;
+  border-bottom:1px dashed rgba(255,255,255,.1);padding-bottom:6px;margin-bottom:6px}
+.hk-fila span:first-child{color:var(--verde)}
+.hk-cargando{display:none;color:var(--texto-2);font-style:italic;margin:12px 0}
+
+/* Botones de la portada (heredan .btn de la cabecera) */
+.hk-btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+</style>
+
+<div class="hk-wrap">
+
+  <!-- PORTADA -->
+  <div class="hk-marcas" id="hkMarcas"></div>
+
+  <div class="hk-hero">
+    <h1><span id="hkNombre">—</span> <span class="anio" id="hkAnio"></span></h1>
+    <div class="bajada" id="hkBajada"></div>
+    <p class="pitch" id="hkPitch"></p>
+    <span class="hk-chip" id="hkModalidad"></span>
+  </div>
+
+  <!-- 01 · REGISTRO -->
+  <section class="hk-sec">
+    <div class="hk-sec-head"><span class="n">01</span><h2>Registro y acceso</h2></div>
+    <hr class="hk-rule">
+    <div class="hk-card">
+      <div class="hk-g2">
+        <div>
+          <h3>Entra a la plataforma</h3>
+          <p class="text-muted" style="font-size:15.5px" id="hkRegistroTxt"></p>
+          <div class="hk-btns">
+            <a class="btn btn-primary" id="hkBtnPlataforma" href="#" target="_blank" rel="noopener">Ir a la plataforma</a>
+            <a class="btn btn-secondary" id="hkBtnReglamento" href="#" target="_blank" rel="noopener" hidden>Ver bases y reglamento</a>
+            <a class="btn btn-secondary" id="hkBtnSoporte" href="#" target="_blank" rel="noopener" hidden>Canal de soporte</a>
+          </div>
+          <p class="text-muted" style="font-size:13.5px;margin-top:12px">Asegúrate de usar <code>https://</code></p>
+        </div>
+        <div>
+          <h3>Código de acceso</h3>
+          <div class="hk-dato" style="margin-top:10px">
+            <span class="ic">✉️</span><span id="hkCodigo"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 · DESPLIEGUE -->
+  <section class="hk-sec">
+    <div class="hk-sec-head"><span class="n">02</span><h2>Despliegue de retos</h2></div>
+    <hr class="hk-rule">
+    <p class="text-muted" style="font-size:15.5px;margin-bottom:18px">
+      Cada reto trae una URL con su puerto o un archivo. Hay dos formas de llegar a la infraestructura.
+    </p>
+
+    <div class="hk-destacado">
+      <div class="hk-destacado-head">
+        <h3>A. Instancia privada</h3><span class="pill">Recomendada</span>
+      </div>
+      <div class="hk-destacado-body">
+        <p class="text-muted" style="font-size:15px;margin-top:0">Un contenedor exclusivo y aislado para tu equipo.</p>
+
+        <div class="hk-auto" style="margin:18px 0 22px" id="hkSpecs"></div>
+
+        <h3 style="font-size:19px !important;margin-bottom:12px !important">Reglas de instancia en equipo</h3>
+        <ul class="hk-lista" id="hkReglasEquipo" style="margin-bottom:24px"></ul>
+
+        <div class="hk-term">
+          <div class="hk-term-bar">
+            <span class="hk-dot"></span><span class="hk-dot"></span><span class="hk-dot"></span>
+            <span class="ruta" id="hkRuta"></span>
+          </div>
+          <div class="hk-term-body">
+            <div class="hk-term-head">
+              <span class="titulo">Vista del desafío</span>
+              <span class="etq">Solo ilustrativo</span>
+            </div>
+            <div id="hkDemoInicio">
+              <button class="btn btn-primary" type="button" onclick="hkDemo()">Iniciar instancia</button>
+            </div>
+            <div class="hk-cargando" id="hkDemoCarga">Creando contenedor…</div>
+            <div class="hk-panel" id="hkDemoActiva">
+              <div class="hk-url" id="hkDemoUrl"></div>
+              <div class="hk-fila"><span>Estado</span><span>running</span></div>
+              <div class="hk-fila"><span>Expira en</span><span>01:59:59</span></div>
+              <div class="hk-btns">
+                <button class="btn btn-secondary btn-sm" type="button">Extender</button>
+                <button class="btn btn-danger btn-sm" type="button" onclick="hkReset()">Detener</button>
+                <button class="btn btn-warning btn-sm" type="button">Reiniciar</button>
+              </div>
+            </div>
+          </div>
+          <div class="hk-sim">Simulación visual: no levanta ningún reto real. Solo muestra cómo se verá en la plataforma.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hk-card" style="margin-top:18px">
+      <div class="hk-g2" style="align-items:center">
+        <div>
+          <h3>B. Instancia pública</h3>
+          <p class="text-muted" style="font-size:15px;margin:0">
+            Servidor compartido. Otros participantes podrían modificar archivos o borrar flags.
+          </p>
+        </div>
+        <div><code id="hkPublica" style="font-size:14.5px"></code></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · REQUISITOS -->
+  <section class="hk-sec">
+    <div class="hk-sec-head"><span class="n">03</span><h2>Requisitos técnicos</h2></div>
+    <hr class="hk-rule">
+    <div class="hk-card"><ul class="hk-lista" id="hkRequisitos"></ul></div>
+  </section>
+
+  <!-- 04 · VPN -->
+  <section class="hk-sec">
+    <div class="hk-sec-head"><span class="n">04</span><h2>VPN y conectividad</h2></div>
+    <hr class="hk-rule">
+    <div class="hk-card">
+      <p class="text-muted" style="font-size:15.5px;margin-top:0">
+        Los retos son accesibles <b style="color:var(--texto)">con o sin VPN</b>. Los que la exigen lo indican en el enunciado.
+      </p>
+      <div class="hk-g2" style="margin-top:18px">
+        <div>
+          <h3 style="color:var(--verde) !important;font-size:20px !important">Conexión</h3>
+          <p class="text-muted" style="font-size:15px">Descarga tu perfil desde CTFd y levántalo:</p>
+          <a class="btn btn-primary btn-sm" id="hkBtnVpn" href="#" download>Descargar archivo VPN</a>
+          <pre style="margin-top:12px"><code id="hkCmdVpn"></code></pre>
+          <p class="text-muted" style="font-size:13.5px">En Windows o Mac: OpenVPN Connect o Tunnelblick.</p>
+        </div>
+        <div>
+          <h3 style="color:var(--rojo) !important;font-size:20px !important">Si algo falla</h3>
+          <ul class="hk-lista">
+            <li><b>El navegador no carga el reto:</b> usa <code>http://</code>, no <code>https://</code>.</li>
+            <li><b>Prueba de conexión reversa</b> desde el servidor hacia tu máquina. Obtén tu IP con <code>ip addr</code> (será algo como 10.8.x.x):</li>
+          </ul>
+          <pre><code>curl -I http://10.8.x.x:PUERTO</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 · REGLAS -->
+  <section class="hk-sec">
+    <div class="hk-sec-head"><span class="n">05</span><h2>Reglas y alcance</h2></div>
+    <hr class="hk-rule">
+
+    <div class="hk-card">
+      <h3 style="color:var(--verde) !important;font-size:21px !important">Alcance · objetivos válidos</h3>
+      <div class="hk-tags" style="margin-top:14px" id="hkScope"></div>
+    </div>
+
+    <div class="hk-card">
+      <h3 style="color:var(--rojo) !important;font-size:21px !important">Prohibido · tolerancia cero</h3>
+      <div class="hk-auto" style="margin-top:14px" id="hkProhibido"></div>
+    </div>
+
+    <div class="hk-card" id="hkAvisos"></div>
+  </section>
+
+  <!-- 06 · CÓDIGO DE HONOR -->
+  <section class="hk-sec">
+    <div class="hk-sec-head"><span class="n">06</span><h2>Código de honor · uso de IA</h2></div>
+    <hr class="hk-rule">
+
+    <p class="text-muted" style="font-size:15.5px;margin-bottom:18px" id="hkHonorLede"></p>
+
+    <div class="hk-card">
+      <h3 style="color:var(--verde) !important;font-size:21px !important">Sí puedes usar IA para</h3>
+      <div class="hk-auto" style="margin-top:14px" id="hkHonorSi"></div>
+    </div>
+
+    <div class="hk-card">
+      <h3 style="color:var(--rojo) !important;font-size:21px !important">No puedes</h3>
+      <div class="hk-auto" style="margin-top:14px" id="hkHonorNo"></div>
+      <p class="text-muted" style="font-size:14px;margin:14px 0 0">
+        En concreto, queda fuera cualquier ciclo autónomo del tipo
+        <code>analizar → ejecutar → interpretar → explotar → obtener la flag</code>.
+      </p>
+    </div>
+
+    <div class="hk-card">
+      <h3 style="font-size:21px !important">Cómo se verifica</h3>
+      <ul class="hk-lista" style="margin-top:12px" id="hkHonorReglas"></ul>
+      <div class="hk-aviso ambar" style="margin-top:18px">
+        <div><span class="t">Consecuencias</span><p id="hkHonorConsec"></p></div>
+      </div>
+    </div>
+
+    <div class="hk-lema" style="margin-top:18px">
+      <div class="frase" id="hkHonorLema"></div>
+      <p>Al participar en Hackingta declaras haber leído, comprendido y aceptado este código de honor.</p>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+  const C = window.HK_CTF, U = C.urls, I = C.infra;
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
+  const set = (s, v) => { const el = $(s); if (el) el.textContent = v; };
+
+  /* ---- Portada ---- */
+  set("#hkNombre", C.evento.nombre);
+  set("#hkAnio", C.evento.anio);
+  set("#hkBajada", C.evento.bajada);
+  set("#hkPitch", C.evento.pitch);
+  set("#hkModalidad", C.evento.modalidad);
+  document.title = C.evento.nombre + " " + C.evento.anio;
+
+  $("#hkMarcas").innerHTML = (C.logos || []).filter(l => l.src)
+    .map(l => `<img src="${esc(l.src)}" alt="${esc(l.alt)}" style="height:${l.alto || 40}px">`).join("");
+
+  /* ---- Registro ---- */
+  const eq = C.acceso.equipos;
+  set("#hkRegistroTxt", eq
+    ? `La competencia es grupal, en equipos de ${eq} integrantes. Regístrate en la plataforma oficial:`
+    : "La competencia es grupal. Regístrate en la plataforma oficial:");
+  set("#hkCodigo", C.acceso.codigoNota);
+
+  const enlace = (sel, url) => {
+    const el = $(sel); if (!el) return;
+    if (url) { el.href = url; el.hidden = false; }
+    else { el.hidden = true; }
+  };
+  enlace("#hkBtnPlataforma", U.plataforma);
+  enlace("#hkBtnReglamento", U.reglamento);
+  enlace("#hkBtnSoporte", U.soporte);
+  enlace("#hkBtnVpn", U.vpn);
+  set("#hkCmdVpn", `sudo openvpn --config ~/Descargas/${U.vpnNombre || "perfil.ovpn"}`);
+
+  /* ---- Despliegue ---- */
+  set("#hkPublica", I.publica);
+  set("#hkRuta", I.deploy);
+  set("#hkDemoUrl", `http://${I.deploy}:32974`);
+
+  $("#hkSpecs").innerHTML = [
+    ["⏳", `<b>${esc(I.duracion)}</b> por defecto`],
+    ["🚫", "<b>1 instancia</b> por reto y equipo"],
+    ["➕", `Extensión <b>${esc(I.extension)}</b> (máx. ${I.maxExt})`],
+    ["🛠️", "Cualquier integrante <b>controla</b>"]
+  ].map(([ic, txt]) => `<div class="hk-dato"><span class="ic">${ic}</span><span>${txt}</span></div>`).join("");
+
+  $("#hkReglasEquipo").innerHTML = (C.reglasEquipo || []).map(r => `<li>${esc(r)}</li>`).join("");
+
+  /* ---- Requisitos ---- */
+  $("#hkRequisitos").innerHTML = (C.requisitos || [])
+    .map(r => `<li><b>${esc(r.t)}:</b> ${esc(r.d)}</li>`).join("");
+
+  /* ---- Reglas ---- */
+  $("#hkScope").innerHTML = (I.scope || []).map(s => `<span class="hk-tag">${esc(s)}</span>`).join("");
+  $("#hkProhibido").innerHTML = (C.prohibiciones || []).map(p => `<div class="hk-no"><span>${esc(p)}</span></div>`).join("");
+  /* ---- Código de honor ---- */
+  const H = C.honor || {};
+  set("#hkHonorLede", H.lede);
+  set("#hkHonorLema", H.lema);
+  set("#hkHonorConsec", H.consecuencias);
+  $("#hkHonorSi").innerHTML = (H.permitido || []).map(x => `<div class="hk-si"><span>${esc(x)}</span></div>`).join("");
+  $("#hkHonorNo").innerHTML = (H.prohibido || []).map(x => `<div class="hk-no"><span>${esc(x)}</span></div>`).join("");
+  $("#hkHonorReglas").innerHTML = (H.reglas || []).map(r => `<li><b>${esc(r.t)}:</b> ${esc(r.d)}</li>`).join("");
+
+  $("#hkAvisos").innerHTML = (C.avisos || []).map(a =>
+    `<div class="hk-aviso ${a.tono === "ambar" ? "ambar" : "neutro"}">
+       <div><span class="t">${esc(a.t)}</span><p>${esc(a.d)}</p></div>
+     </div>`).join("");
+})();
+
+/* ---- Simulación del panel de instancia ---- */
+function hkDemo() {
+  document.getElementById("hkDemoInicio").style.display = "none";
+  const carga = document.getElementById("hkDemoCarga");
+  carga.textContent = "Creando contenedor…";
+  carga.style.display = "block";
+  setTimeout(function () {
+    carga.style.display = "none";
+    document.getElementById("hkDemoActiva").style.display = "block";
+  }, 1400);
+}
+function hkReset() {
+  document.getElementById("hkDemoActiva").style.display = "none";
+  const carga = document.getElementById("hkDemoCarga");
+  carga.textContent = "Deteniendo…";
+  carga.style.display = "block";
+  setTimeout(function () {
+    carga.style.display = "none";
+    document.getElementById("hkDemoInicio").style.display = "block";
+  }, 900);
+}
+</script>

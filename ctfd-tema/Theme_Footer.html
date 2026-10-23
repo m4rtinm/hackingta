@@ -1,0 +1,111 @@
+<!-- ══════════════════════════════════════════════════════════════════════════
+     HACKINGTA · TEMA CTFd — PIE
+     Pegar en:  Admin → Config → Theme → Theme Footer
+     ══════════════════════════════════════════════════════════════════════════ -->
+<script>
+/* ══════════════════════════════════════════════════════════════════════════
+   ⚙️  CONFIGURACIÓN — EDITA SOLO ESTE BLOQUE
+   ══════════════════════════════════════════════════════════════════════════ */
+window.HK_PIE = {
+
+  /* ── Título animado de la pestaña del navegador ───────────────────────── */
+  tituloAnimado:  true,                 // false = deja el título normal de CTFd
+  tituloTexto:    " HACKINGTA 2026 · CTF ",   // el texto que gira
+  tituloVelocidad: 300,                 // milisegundos por paso
+
+  /* ── Mensaje en la consola para quien abra las herramientas ──────────── */
+  consolaTitulo:  " INTRUSO DETECTADO ",
+  consolaMensaje: " La infraestructura de CTFd está fuera de alcance. Las flags están en los desafíos. Mucho éxito. ",
+
+  /* ── Comportamiento ──────────────────────────────────────────────────── */
+  forzarModoOscuro: true,   // el tema está diseñado solo en oscuro
+  reflejoVidrio:    true    // el brillo que sigue al cursor sobre las tarjetas
+};
+</script>
+
+<script>
+(function () {
+  "use strict";
+  const C = window.HK_PIE || {};
+
+  /* ── Modo oscuro permanente ─────────────────────────────────────────────
+     El tema está construido solo en oscuro; si CTFd cambia a claro, los
+     textos quedan ilegibles. Un observador lo devuelve a oscuro. */
+  function forzarOscuro() {
+    try {
+      localStorage.setItem("theme", "dark");
+      localStorage.setItem("ctfd-theme", "dark");
+    } catch (e) { /* almacenamiento bloqueado: no es crítico */ }
+    document.documentElement.setAttribute("data-theme", "dark");
+    const b = document.body;
+    if (!b) return;
+    b.classList.remove("light", "ctfd-theme-light");
+    b.classList.add("dark", "ctfd-theme-dark");
+  }
+
+  if (C.forzarModoOscuro !== false) {
+    forzarOscuro();
+    const observador = new MutationObserver(function (cambios) {
+      for (const c of cambios) {
+        if (c.type !== "attributes") continue;
+        const t = c.target;
+        if (t === document.documentElement && t.getAttribute("data-theme") !== "dark") return forzarOscuro();
+        if (t === document.body && (t.classList.contains("light") || t.classList.contains("ctfd-theme-light"))) return forzarOscuro();
+      }
+    });
+    observador.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme", "class"] });
+    if (document.body) observador.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+  }
+
+  /* ── Título animado de la pestaña ───────────────────────────────────────
+     Se detiene cuando la pestaña no está visible: si no, sigue consumiendo
+     tiempo de CPU en segundo plano durante toda la competencia. */
+  if (C.tituloAnimado !== false && C.tituloTexto) {
+    let texto = C.tituloTexto;
+    const paso = C.tituloVelocidad || 300;
+    let temporizador = null;
+
+    function girar() {
+      document.title = texto;
+      texto = texto.substring(1) + texto.substring(0, 1);
+      temporizador = setTimeout(girar, paso);
+    }
+    function arrancar() { if (!temporizador) girar(); }
+    function detener() { clearTimeout(temporizador); temporizador = null; }
+
+    document.addEventListener("visibilitychange", function () {
+      document.hidden ? detener() : arrancar();
+    });
+    arrancar();
+  }
+
+  /* ── Reflejo del vidrio: el brillo sigue al cursor ──────────────────────
+     Alimenta las variables --mx / --my que usa el ::after de la cabecera. */
+  if (C.reflejoVidrio !== false && !window.matchMedia("(hover: none)").matches) {
+    let pendiente = false, ultimo = null;
+    document.addEventListener("pointermove", function (e) {
+      if (e.pointerType === "touch") return;
+      ultimo = e;
+      if (pendiente) return;
+      pendiente = true;
+      requestAnimationFrame(function () {
+        pendiente = false;
+        const el = ultimo.target.closest(".hk-glass, .card, .challenge-button");
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        el.style.setProperty("--mx", ((ultimo.clientX - r.left) / r.width * 100) + "%");
+        el.style.setProperty("--my", ((ultimo.clientY - r.top) / r.height * 100) + "%");
+      });
+    }, { passive: true });
+  }
+
+  /* ── Saludo para quien abra la consola ──────────────────────────────── */
+  if (C.consolaTitulo) {
+    console.log("%c" + C.consolaTitulo,
+      "background:#2FD36B;color:#04180D;font-size:20px;font-weight:700;padding:4px 10px;border-radius:6px");
+  }
+  if (C.consolaMensaje) {
+    console.log("%c" + C.consolaMensaje, "color:#7CF0B4;font-size:14px");
+  }
+})();
+</script>
